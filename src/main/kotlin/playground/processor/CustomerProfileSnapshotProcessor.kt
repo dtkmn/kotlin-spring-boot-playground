@@ -1,6 +1,6 @@
-package processor
+package playground.processor
 
-//import repository.CePiiRepository
+//import playground.CePiiRepository
 //import com.projectdrgn.cepiiservice.service.GeocodingService
 //import com.projectdrgn.common.idempotency.IdempotencyProvider
 //import com.projectdrgn.common.messaging.MoxHeaders
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class CustomerProfileSnapshotProcessor(
-    @Value("\${dragon.messaging.customer-profile.consumer-group-id}") private val kafkaConsumerGroupId: String,
+//    @Value("\${dragon.messaging.customer-profile.consumer-group-id}") private val kafkaConsumerGroupId: String,
 //    private val idempotencyProvider: IdempotencyProvider,
 //    private val geocodingService: GeocodingService,
 //    private val repository: CePiiRepository,
@@ -24,13 +24,13 @@ class CustomerProfileSnapshotProcessor(
 
 //    private val log = logger()
 
-    @KafkaListener(
-        id = "\${dragon.messaging.customer-profile.consumer-group-id}",
-        clientIdPrefix = "\${dragon.messaging.customer-profile.id-prefix}",
-        topics = ["\${dragon.messaging.customer-profile.topic}"],
-        concurrency = "\${dragon.messaging.customer-profile.listener-count}",
-        autoStartup = "\${dragon.messaging.customer-profile.enabled}"
-    )
+//    @KafkaListener(
+//        id = "\${dragon.messaging.customer-profile.consumer-group-id}",
+//        clientIdPrefix = "\${dragon.messaging.customer-profile.id-prefix}",
+//        topics = ["\${dragon.messaging.customer-profile.topic}"],
+//        concurrency = "\${dragon.messaging.customer-profile.listener-count}",
+//        autoStartup = "\${dragon.messaging.customer-profile.enabled}"
+//    )
     @Throws(Exception::class)
     fun process(
 //        @Payload snapshot: CustomerProfileSnapshot,

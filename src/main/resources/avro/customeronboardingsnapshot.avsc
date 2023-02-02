@@ -1,9 +1,9 @@
 {
   "mox-meta": {
-    "version": "2.22.0",
+    "version": "1.0.0",
     "type": "ENTITY_SNAPSHOT"
   },
-  "namespace": "com.mox.customer.contract.avro.customerprofilesnapshot.v2",
+  "namespace": "playground.customer.contract.avro.customerprofilesnapshot.v2",
   "type": "record",
   "name": "CustomerProfileSnapshot",
   "fields": [
