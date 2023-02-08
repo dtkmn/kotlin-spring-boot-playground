@@ -1,0 +1,1651 @@
+{
+  "mox-meta": {
+    "version": "1.0.0",
+    "type": "ENTITY_SNAPSHOT"
+  },
+  "namespace": "playground.customer.contract.avro.customerprofilesnapshot.v2",
+  "type": "record",
+  "name": "CustomerProfileSnapshot",
+  "fields": [
+    {
+      "name": "customerId",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "externalId",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "Status",
+        "symbols": [
+          "UNKNOWN",
+          "ACTIVE",
+          "FROZEN",
+          "DECEASED",
+          "PROSPECT",
+          "DENIED"
+        ]
+      }
+    },
+    {
+      "name": "extendedStatus",
+      "type": {
+        "type": "enum",
+        "name": "ExtendedStatus",
+        "symbols": [
+          "UNKNOWN",
+          "CREATED",
+          "SUBMITTED",
+          "DENIED",
+          "ACTIVE",
+          "OFFBOARDED",
+          "DECEASED"
+        ]
+      },
+      "default": "UNKNOWN"
+    },
+    {
+      "name": "firstName",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "lastName",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "fullName",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "aliasName",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null,
+      "doc": "Customer's alias name from MyInfo"
+    },
+    {
+      "name": "nickname",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "phoneNumber",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "PhoneNumber",
+          "fields": [
+            {
+              "name": "countryCode",
+              "type": {
+                "type": "string",
+                "avro.java.string": "String"
+              },
+              "doc": "Country code dial number prefix for phone number (e.g. +852)"
+            },
+            {
+              "name": "countryCodeISO2",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "ISO Alpha-2 code for the mobile country code (e.g. HK)"
+            },
+            {
+              "name": "number",
+              "type": {
+                "type": "string",
+                "avro.java.string": "String"
+              }
+            },
+            {
+              "name": "verifiedAt",
+              "type": [
+                "null",
+                {
+                  "type": "long",
+                  "logicalType": "timestamp-millis"
+                }
+              ],
+              "default": null,
+              "doc": "The timestamp when phone was verified"
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "email",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "gender",
+      "type": {
+        "type": "enum",
+        "name": "Gender",
+        "symbols": [
+          "UNKNOWN",
+          "FEMALE",
+          "MALE"
+        ]
+      }
+    },
+    {
+      "name": "dateOfBirth",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "placeOfBirth",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "countryOfBirth",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "countryOfResidence",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "idType",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "IdType",
+          "symbols": [
+            "PERM_ID",
+            "NONPERM_ID",
+            "PASSPORT"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "idIssuingCountry",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "idCountryOfBirth",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "identificationCardNumber",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "passportNumber",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "nationalities",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "avro.java.string": "String"
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "taxInfoList",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "TaxInfo",
+            "fields": [
+              {
+                "name": "country",
+                "type": {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              },
+              {
+                "name": "reason",
+                "type": [
+                  "null",
+                  {
+                    "type": "string",
+                    "avro.java.string": "String"
+                  }
+                ],
+                "default": null,
+                "doc": "The reason why customer didn't provide tax id for given country"
+              },
+              {
+                "name": "taxId",
+                "type": {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "occupation",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Occupation",
+          "fields": [
+            {
+              "name": "avgMonthlyIncome",
+              "type": [
+                "null",
+                {
+                  "type": "bytes",
+                  "logicalType": "decimal",
+                  "precision": 20,
+                  "scale": 4
+                }
+              ],
+              "default": null,
+              "doc": "Average monthly income declared by customer"
+            },
+            {
+              "name": "status",
+              "type": {
+                "type": "string",
+                "avro.java.string": "String"
+              }
+            },
+            {
+              "name": "sector",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "subtype",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "usCitizenOrGreenCardHolder",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "usSocialSecurityNumber",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "tncVersion",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "creditConsent",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null,
+      "doc": "The flag which indicates if customer has interest in opening credit account."
+    },
+    {
+      "name": "craRating",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "CraRating",
+          "symbols": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "P"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "cddReviewStatus",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "CddReviewStatus",
+          "symbols": [
+            "NOT_REQUIRED",
+            "NOT_DUE_YET"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "cddReviewDate",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "cddNextReviewDate",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "pepStatus",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "NameScreeningStatus",
+          "symbols": [
+            "TRUE",
+            "FALSE",
+            "POTENTIAL_MATCH"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "amStatus",
+      "type": [
+        "null",
+        "NameScreeningStatus"
+      ],
+      "default": null
+    },
+    {
+      "name": "onboardingStp",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "hnwStatus",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "sofOverLimit",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "aumOver2mStatus",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "aumOver5mStatus",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "sanctionsStatus",
+      "type": [
+        "null",
+        "NameScreeningStatus"
+      ],
+      "default": null
+    },
+    {
+      "name": "ddStatus",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "privacyPolicyVersion",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "accountPurposeInstalments",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null,
+      "doc": "The flag indicates whether customer created account for instalments. Null if customer haven't provided account purpose yet."
+    },
+    {
+      "name": "accountPurposeInternationalPayments",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null,
+      "doc": "The flag indicates whether customer created account for payments. Null if customer haven't provided account purpose yet."
+    },
+    {
+      "name": "accountPurposeSavings",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null,
+      "doc": "The flag indicates whether customer created account for savings. Null if customer haven't provided account purpose yet."
+    },
+    {
+      "name": "accountPurposeTransactions",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null,
+      "doc": "The flag indicates whether customer created account for transactions. Null if customer haven't provided account purpose yet."
+    },
+    {
+      "name": "scanId",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "doc": "ID verification scan reference",
+      "default": null
+    },
+    {
+      "name": "submittedAt",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null,
+      "doc": "Timestamp of customer submission for checks."
+    },
+    {
+      "name": "onboardingDate",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "offboardedAt",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "onboardedAt",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "deniedAt",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "deletedAt",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "staff",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
+      "name": "ntbr",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "potentialTaxResidencies",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "avro.java.string": "String"
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "recalcitrant",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "unresponsive",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "emailVerified",
+      "type": "boolean"
+    },
+    {
+      "name": "emailInvalid",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "tags",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "enum",
+          "name": "CustomerTag",
+          "symbols": [
+            "UNKNOWN",
+            "VIP",
+            "INTERNAL_BETA",
+            "FOUNDING_MEMBER",
+            "FAMILY_AND_FRIENDS",
+            "PARTNER",
+            "TEST_ACCOUNT",
+            "PRE_REGISTERED",
+            "DOWNGRADED"
+          ],
+          "default": "UNKNOWN"
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "mailingAddress",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "CustomerAddress",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "type": "string",
+                "avro.java.string": "String"
+              },
+              "doc": "The unique identifier of customer address"
+            },
+            {
+              "name": "apartment",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "streetName",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "unit",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "addressLine1",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "If provided contains flat, floor and/or block, e.g. Flat LA Block 6 Floor 15"
+            },
+            {
+              "name": "addressLine2",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "If provided contains raw address, e.g. Taikoo Shing Road 2 Hong Kong"
+            },
+            {
+              "name": "addressLine3",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "If provided contains postal code, city and/or country, e.g. HK"
+            },
+            {
+              "name": "addressPurpose",
+              "type": {
+                "type": "enum",
+                "name": "AddressPurpose",
+                "symbols": [
+                  "RESIDENTIAL",
+                  "MAILING"
+                ]
+              },
+              "doc": "The enum describing how customer uses this address"
+            },
+            {
+              "name": "block",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "The block where address is located. It's only present if applicable."
+            },
+            {
+              "name": "city",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "The city where address is located"
+            },
+            {
+              "name": "country",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "The country where address is located. Represented as ISO alpha-2 code."
+            },
+            {
+              "name": "createdAt",
+              "type": {
+                "type": "long",
+                "logicalType": "timestamp-millis"
+              },
+              "doc": "The timestamp when address was created in UTC timezone."
+            },
+            {
+              "name": "updatedAt",
+              "type": [
+                "null",
+                {
+                  "type": "long",
+                  "logicalType": "timestamp-millis"
+                }
+              ],
+              "default": null,
+              "doc": "Last update of this address"
+            },
+            {
+              "name": "flat",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "The flat where address is located. It's only present if applicable."
+            },
+            {
+              "name": "floor",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "The floor where address is located. It's only present if applicable."
+            },
+            {
+              "name": "building",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "Building name"
+            },
+            {
+              "name": "fullAddress",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "Flat, block, floor, raw address (which contains building name, street, district), city and country"
+            },
+            {
+              "name": "postalCode",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "The postal code where address is located. Not applicable for HK addresses"
+            },
+            {
+              "name": "rawAddress",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null,
+              "doc": "The raw address may contain building name, street, district or other address parts depending on location."
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Mailing address provided by customer"
+    },
+    {
+      "name": "residentialAddress",
+      "type": [
+        "null",
+        "CustomerAddress"
+      ],
+      "default": null,
+      "doc": "Residential address provided of customer"
+    },
+    {
+      "name": "createdAt",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "updatedAt",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "denyCode",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DenyCode",
+          "symbols": [
+            "ONBO_DENY_IDV",
+            "ONBO_DENY_LIVENESS_MATCH",
+            "ONBO_DENY_CDD",
+            "ONBO_DENY_SANCTIONS",
+            "ONBO_DENY_GNS",
+            "ONBO_DENY_CRA"
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "If the customer was denied onboarding, this field is populated with the reason code",
+      "deprecated": "Field no longer used and replaced by denyCodeV2"
+    },
+    {
+      "name": "denyCodeV2",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DenyCodeV2",
+          "symbols": [
+            "ONBO_DENY_AGE",
+            "ONBO_DENY_CDD",
+            "ONBO_DENY_CRA",
+            "ONBO_DENY_GNS",
+            "ONBO_DENY_IDV_CASE",
+            "ONBO_DENY_IDV_FRAUD",
+            "ONBO_DENY_IDV_QUALITY",
+            "ONBO_DENY_PROHIBITED",
+            "ONBO_DENY_SANCTIONS",
+            "ONBO_DENY_SANCTIONS_CASE",
+            "ONBO_DENY_UNDETERMINED",
+            "ONBO_DENY_ALREADY_A_CUSTOMER",
+            "ONBO_DENY_BLOCKLIST",
+            "ONBO_DENY_FRAUD_WATCHLIST",
+            "ONBO_DENY_BANKRUPT",
+            "ONBO_DENY_USINDICIA",
+            "ONBO_DENY_NO_SG_TAXINFO",
+            "ONBO_DENY_TAXCOUNTRY_NOT_ALLOWED",
+            "UNKNOWN"
+          ],
+          "default": "UNKNOWN"
+        }
+      ],
+      "default": null,
+      "doc": "If the customer was denied onboarding, this field is populated with the reason code"
+    },
+    {
+      "name": "denyReason",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null,
+      "doc": "If the customer was denied onboarding, this field is populated with a human readable reason"
+    },
+    {
+      "name": "formerPep",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null,
+      "doc": "Denotes if the customer was a PEP before"
+    },
+    {
+      "name": "unionMember",
+      "type": [
+        "null",
+        {
+          "type": "boolean"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "unionStatus",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "UnionStatus",
+          "symbols": [
+            "ACTIVE",
+            "INACTIVE",
+            "NOT_MEMBER"
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "NTUC Union Status"
+    },
+    {
+      "name": "controllingDirector",
+      "type": [
+        "null",
+        {
+          "type": "boolean"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "employment",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Employment",
+          "fields": [
+            {
+              "name": "type",
+              "type": {
+                "type": "string",
+                "avro.java.string": "String"
+              }
+            },
+            {
+              "name": "businessName",
+              "type": {
+                "type": "string",
+                "avro.java.string": "String"
+              }
+            },
+            {
+              "name": "businessNature",
+              "type": {
+                "type": "string",
+                "avro.java.string": "String"
+              }
+            },
+            {
+              "name": "jobTitle",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "applicationId",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "deprecated": "Field no longer used",
+      "default": null,
+      "doc": "ID of application for credit card"
+    },
+    {
+      "name": "nric",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null,
+      "doc": "NRIC (uinFin) number from MyInfo"
+    },
+    {
+      "name": "maritalStatus",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null,
+      "doc": "Customer's marital status from MyInfo"
+    },
+    {
+      "name": "residentialStatus",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null,
+      "doc": "Customer's residential status from MyInfo"
+    },
+    {
+      "name": "noa",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Noa",
+          "fields": [
+            {
+              "name": "yearOfAssessment",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "income",
+              "type": [
+                "null",
+                {
+                  "type": "bytes",
+                  "logicalType": "decimal",
+                  "precision": 20,
+                  "scale": 2
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "incomeDetails",
+              "type": [
+                "null",
+                {
+                  "name": "IncomeDetails",
+                  "type": "record",
+                  "fields": [
+                    {
+                      "name": "taxclearance",
+                      "type": [
+                        "null",
+                        {
+                          "type": "string",
+                          "avro.java.string": "String"
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "employment",
+                      "type": [
+                        "null",
+                        {
+                          "type": "bytes",
+                          "logicalType": "decimal",
+                          "precision": 20,
+                          "scale": 2
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "trade",
+                      "type": [
+                        "null",
+                        {
+                          "type": "bytes",
+                          "logicalType": "decimal",
+                          "precision": 20,
+                          "scale": 2
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "rent",
+                      "type": [
+                        "null",
+                        {
+                          "type": "bytes",
+                          "logicalType": "decimal",
+                          "precision": 20,
+                          "scale": 2
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "interest",
+                      "type": [
+                        "null",
+                        {
+                          "type": "bytes",
+                          "logicalType": "decimal",
+                          "precision": 20,
+                          "scale": 2
+                        }
+                      ],
+                      "default": null
+                    }
+                  ]
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "cpfHistory",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "CpfHistory",
+          "fields": [
+            {
+              "name": "employer",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "date",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "month",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "amount",
+              "type": [
+                "null",
+                {
+                  "type": "bytes",
+                  "logicalType": "decimal",
+                  "precision": 20,
+                  "scale": 2
+                }
+              ],
+              "default": null
+            }
+          ],
+          "default": null
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "passType",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null,
+      "doc": "PassType from MyInfo"
+    },
+    {
+      "name": "passStatus",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null,
+      "doc": "PassStatus from MyInfo"
+    },
+    {
+      "name": "passExpiryDate",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "newAcceptedConsents",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Consent",
+          "fields": [
+            {
+              "name": "type",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "productType",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "version",
+              "type": [
+                "null",
+                {
+                  "type": "string",
+                  "avro.java.string": "String"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "acceptedAt",
+              "type": [
+                "null",
+                {
+                  "type": "long",
+                  "logicalType": "timestamp-millis"
+                }
+              ],
+              "default": null
+            }
+          ],
+          "default": null
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "scbslCustomerID",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "cclCustomerData",
+      "type": [
+        "null",
+        {
+          "name": "CclCustomerData",
+          "type": "record",
+          "fields": [
+            {
+              "name": "recognizedAnnualIncome",
+              "type": "long"
+            },
+            {
+              "name": "incomeSource",
+              "type": {
+                "type": "enum",
+                "name": "IncomeSource",
+                "symbols": [
+                  "PHX",
+                  "SCB"
+                ]
+              }
+            },
+            {
+              "name": "incomeUpdatedDate",
+              "type": [
+                "null",
+                {
+                  "type": "int",
+                  "logicalType": "date"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "regulatedSegment",
+              "type": [
+                "null",
+                {
+                  "type": "boolean"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "scbslCustomerStatus",
+              "type": [
+                "null",
+                {
+                  "type": "enum",
+                  "name": "scbslCustomerStatus",
+                  "symbols": [
+                    "ACTIVE",
+                    "INACTIVE"
+                  ]
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "scbslCreditLimit",
+              "type": [
+                "null",
+                {
+                  "type": "long"
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "scbslOutstandingBalance",
+              "type": [
+                "null",
+                {
+                  "type": "long"
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "referralCode",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "alternateName1",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "alternateName2",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "alternateName3",
+      "type": [
+        "null",
+        {
+          "type": "string",
+          "avro.java.string": "String"
+        }
+      ],
+      "default": null
+    }
+  ]
+}

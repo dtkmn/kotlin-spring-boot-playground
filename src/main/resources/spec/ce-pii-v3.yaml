@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  description: CE Personal Identifiable Information Service API
+  version: 3.0.3
+  title: CE Personal Identifiable Information Service
+  x-mox-force-incompatible-changes: true
+  contact:
+    name: Customer Engagement Team
+  x-provider: ce-pii-service
+paths:
+  '/pii/internal/{customerId}':
+    parameters:
+      - name: customerId
+        in: path
+        description: Customer Id
+        required: true
+        schema:
+          type: string
+      - name: requestId
+        in: header
+        description: The request id. Must be identical for a retry to allow for
+          idempotent behavior.
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      x-consumers:
+        - coupon-service
+        - mgm-service
+        - moengage-gateway
+      summary: Get Internal Data
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CePiiInternalData'
+              examples:
+                OK:
+                  value:
+                    customerId: '1004364535648151407'
+                    externalId: '1004364535648151407'
+                    residentialLatitude: 1000
+                    residentialLongitude: 230
+        '404':
+          description: Entity not found
+      operationId: getInternalData
+      tags:
+        - pii
+      description: Get internal data by customer id
+servers:
+  - description: domain name within VPN
+    url: 'https://ce-pii-service.apps.{env}.projectdrgn.com/v3'
+    variables:
+      env:
+        enum:
+          - dev
+          - stg
+          - prod
+        default: dev
+  - description: local
+    url: 'http://localhost:8080/v3'
+components:
+  responses:
+    BadRequest:
+      $ref: '#/components/responses/ErrorResponse'
+    ErrorResponse:
+      description: Bad request
+  parameters: {}
+  schemas:
+    CePiiInternalData:
+      title: CePiiInternalData
+      type: object
+      properties:
+        customerId:
+          type: string
+        externalId:
+          type: string
+        residentialLatitude:
+          type: number
+          format: double
+        residentialLongitude:
+          type: number
+          format: double
+      required:
+        - customerId
+  securitySchemes:
+    accessTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    idTokenAuth:
+      type: apiKey
+      in: header
+      name: idtoken
+    staffIdTokenAuth:
+      type: apiKey
+      in: header
+      name: staffidtoken
+security:
+  - accessTokenAuth: []
+    idTokenAuth: []
+    staffIdTokenAuth: []
+tags:
+  - name: pii
