@@ -1,22 +1,22 @@
 package playground.entity
 
-//import jakarta.persistence.Column
-//import jakarta.persistence.Entity
-//import jakarta.persistence.Id
-//import jakarta.persistence.Table
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 import playground.customer.contract.avro.customerprofilesnapshot.v2.CustomerProfileSnapshot
 import java.time.Instant
 
 
-//@Entity
-//@Table(name = "ce_pii")
+@Entity
+@Table(name = "ce_pii")
 data class CePiiEntity(
 
-//    @Id
-//    @Column(nullable = false, updatable = false)
+    @Id
+    @Column(nullable = false, updatable = false)
     val customerId: String,
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     val externalId: String,
 
     val fullName: String?,
@@ -25,24 +25,25 @@ data class CePiiEntity(
     val latitude: Double,
     val longitude: Double,
     val joinedAt: Instant,
-    val snapshot: CustomerProfileSnapshot,
 
     ) {
-//    companion object {
-//        fun from(snapshot: CustomerProfileSnapshot,
-////                 location: ResidentialLocation? = null
-//        ) = CePiiEntity(
-//                customerId = snapshot.customerId.toString(),
-//                externalId = snapshot.externalId!!.toString(),
-//                fullName = snapshot.fullName.toString(),
-//                emailAddress = snapshot.email.toString(),
-//                phoneNumber = snapshot.phoneNumber?.toString(),
-////                latitude = location?.latitude ?: 0.0,
-////                longitude = location?.longitude ?: 0.0,
-//                latitude = 0.0,
-//                longitude = 0.0,
-//                joinedAt = snapshot.createdAt!!
-//            )
+    companion object {
+        fun from(
+            snapshot: CustomerProfileSnapshot,
+//                 location: ResidentialLocation? = null
+        ) = CePiiEntity(
+            customerId = snapshot.customerId.toString(),
+            externalId = snapshot.externalId!!.toString(),
+            fullName = snapshot.fullName.toString(),
+            emailAddress = snapshot.email.toString(),
+            phoneNumber = snapshot.phoneNumber?.toString(),
+//                latitude = location?.latitude ?: 0.0,
+//                longitude = location?.longitude ?: 0.0,
+            latitude = 0.0,
+            longitude = 0.0,
+            joinedAt = snapshot.createdAt!!
+        )
+    }
 //        fun from(customerProfile: CustomerProfile,
 //                 location: ResidentialLocation? = null
 //        ) = CePiiEntity(
