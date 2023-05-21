@@ -1,25 +1,27 @@
+import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     dependencies {
-        classpath("org.openapitools:openapi-generator-gradle-plugin:6.2.1")
+        classpath("org.openapitools:openapi-generator-gradle-plugin:6.5.0")
     }
 }
 
 plugins {
     id ("java")
-    id ("org.openapi.generator") version "6.2.1"
+    id ("org.openapi.generator") version "6.5.0"
     id ("org.springframework.boot") version "3.0.2"
     id ("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.7.22"
-    kotlin("plugin.spring") version "1.7.22"
-    kotlin("plugin.allopen") version "1.7.22"
-    kotlin("plugin.jpa") version "1.7.22"
+    id ("com.github.davidmc24.gradle.plugin.avro") version "1.3.0"
+    kotlin("jvm") version "1.8.0"
+    kotlin("plugin.spring") version "1.8.0"
+    kotlin("plugin.allopen") version "1.8.0"
+    kotlin("plugin.jpa") version "1.8.0"
 }
 
 group = "playground"
 version = "1.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_19
 
 repositories {
     mavenCentral()
@@ -35,11 +37,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.kafka:spring-kafka")
 
-    implementation("org.apache.avro:avro-tools:1.11.1") {
-//        exclude(group = "ch.qos.logback", module = "logback-classic")
-//        exclude(group = "org.slf4j", module = "slf4j-reload4j")
-    }
-//    implementation("org.apache.avro:avro:1.11.1")
+    implementation("org.apache.avro:avro:1.11.1")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -59,17 +57,7 @@ configurations.all {
     exclude(group = "ch.qos.logback", module = "logback-classic")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
 
-tasks.withType<KotlinCompile> {
-//    kotlinOptions.jvmTarget = "19"
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
-    }
-}
 
 allOpen {
     annotation("jakarta.persistence.Entity")
@@ -78,32 +66,69 @@ allOpen {
 }
 
 openApiGenerate {
-    generatorName.set("kotlin-spring")
+    generatorName.set("java")
     inputSpec.set("${projectDir}/src/main/resources/spec/ce-pii-v3.yaml")
-    outputDir.set("${buildDir}/generated")
+    outputDir.set("${buildDir}/generated/openapi")
     apiPackage.set("org.openapi.example.api")
     modelPackage.set("org.openapi.example.model")
+    configOptions.set(
+        mapOf(
+            "useJakartaEe" to "true"
+        )
+    )
     println("Finishing openApiGenerate ... ")
 }
 
-tasks.register("generateAvroClasses", JavaExec::class) {
-    main = "org.apache.avro.tool.Main"
-    classpath = configurations.compileClasspath.get() + configurations.runtimeClasspath.get()
-    args = listOf("compile", "schema", "${projectDir}/src/main/resources/avro/customeronboardingsnapshot.avsc", "${buildDir}/classes/kotlin")
-    println("Finishing generateAvroClasses ... ")
+avro {
+    fieldVisibility.set("PRIVATE")
+    outputCharacterEncoding.set("UTF-8")
+    stringType.set("String")
+}
+
+//tasks.register("generateAvroClasses", JavaExec::class) {
+//    main = "org.apache.avro.tool.Main"
+//    classpath = configurations.compileClasspath.get() + configurations.runtimeClasspath.get()
+//    args = listOf("compile", "schema", "${projectDir}/src/main/resources/avro/customeronboardingsnapshot.avsc", "${buildDir}/classes/kotlin")
+//    println("Finishing generateAvroClasses ... ")
+//}
+
+val avroSourceDir = "src/main/resources/avro"
+val generateAvro = tasks.register<GenerateAvroJavaTask>("generateAvro") {
+    source = fileTree(avroSourceDir).matching {
+        include("**/*.avsc")
+    }
+    setOutputDir(file("${buildDir}/generated/avro"))
 }
 
 
-tasks.getByName("build")
-    .dependsOn("generateAvroClasses")
-    .dependsOn("openApiGenerate")
-    .didWork
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "19"
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "19"
+        }
+        dependsOn(generateAvro)
+        dependsOn(openApiGenerate)
+    }
+}
+
+//tasks.getByName("build")
+//    .dependsOn("generateAvro")
+//    .dependsOn("openApiGenerate")
+//    .didWork
 
 
 sourceSets {
     main {
         java {
-            srcDirs("${buildDir}/classes/kotlin")
+            srcDir("src/main/kotlin")
+            srcDir("${buildDir}/generated/avro")
+            srcDir("${buildDir}/generated/openapi/src/main/kotlin")
         }
     }
 }
