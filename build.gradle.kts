@@ -10,7 +10,7 @@ buildscript {
 plugins {
     id ("java")
     id ("org.openapi.generator") version "6.5.0"
-    id ("org.springframework.boot") version "3.0.2"
+    id ("org.springframework.boot") version "3.0.7"
     id ("io.spring.dependency-management") version "1.1.0"
     id ("com.github.davidmc24.gradle.plugin.avro") version "1.3.0"
     kotlin("jvm") version "1.8.0"
@@ -34,14 +34,44 @@ dependencies {
 //    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-logging")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+//    implementation("org.springframework.boot:spring-boot-autoconfigure")
+
+    implementation("org.springframework.security:spring-security-config")
+
     implementation("org.springframework.kafka:spring-kafka")
+
+    implementation("io.sentry:sentry-spring-boot-starter-jakarta:6.20.0")
+    implementation("io.sentry:sentry-logback:6.20.0")
 
     implementation("org.apache.avro:avro:1.11.1")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("io.confluent:kafka-avro-serializer:7.3.1")
+
+    implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+    implementation("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation("org.springframework.security:spring-security-oauth2-jose:6.1.0")
+
+    implementation("com.datadoghq:dd-trace-api:1.14.0")
+
+    implementation("io.micrometer:micrometer-core:1.11.0")
+    implementation("io.opentelemetry:opentelemetry-sdk:1.26.0")
+
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+
+    implementation("org.javamoney:moneta:1.4.2")
+
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.1.2")
+
+    implementation("com.github.ben-manes.caffeine:caffeine")
+    implementation("org.springframework:spring-context-support")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+
 
     runtimeOnly("com.h2database:h2")
 
@@ -53,10 +83,10 @@ dependencies {
     testImplementation("com.ninja-squad:springmockk:4.0.0")
 }
 
-configurations.all {
-    exclude(group = "ch.qos.logback", module = "logback-classic")
-}
-
+//configure<com.palantir.gradle.docker.DockerExtension> {
+//    name.set("your-docker-username/your-microservice:latest")
+//    files("build/libs")
+//}
 
 
 allOpen {
@@ -85,13 +115,6 @@ avro {
     stringType.set("String")
 }
 
-//tasks.register("generateAvroClasses", JavaExec::class) {
-//    main = "org.apache.avro.tool.Main"
-//    classpath = configurations.compileClasspath.get() + configurations.runtimeClasspath.get()
-//    args = listOf("compile", "schema", "${projectDir}/src/main/resources/avro/customeronboardingsnapshot.avsc", "${buildDir}/classes/kotlin")
-//    println("Finishing generateAvroClasses ... ")
-//}
-
 val avroSourceDir = "src/main/resources/avro"
 val generateAvro = tasks.register<GenerateAvroJavaTask>("generateAvro") {
     source = fileTree(avroSourceDir).matching {
@@ -116,12 +139,6 @@ tasks {
         dependsOn(openApiGenerate)
     }
 }
-
-//tasks.getByName("build")
-//    .dependsOn("generateAvro")
-//    .dependsOn("openApiGenerate")
-//    .didWork
-
 
 sourceSets {
     main {

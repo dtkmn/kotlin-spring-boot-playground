@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+<!--    <appender name="Console"-->
+<!--              class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <layout class="ch.qos.logback.classic.PatternLayout">-->
+<!--            <Pattern>-->
+<!--                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable-->
+<!--            </Pattern>-->
+<!--        </layout>-->
+<!--    </appender>-->
+
+<!--    <root level="info">-->
+<!--        <appender-ref ref="Console" />-->
+<!--    </root>-->
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="JsonEncoder"/>
+    </appender>
+
+    <include resource="org/springframework/boot/logging/logback/default.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+    <logger name="org.springframework.web" level="DEBUG"/>
+
+</configuration>

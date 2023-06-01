@@ -1,0 +1,45 @@
+{
+  "mox-meta": {
+    "version": "1.0.0",
+    "type": "ACTIVITY_EVENT"
+  },
+  "type": "record",
+  "name": "BatchJobStatusUpdatedEvent",
+  "namespace": "com.mox.shared.contract.avro.batchjobstatusupdatedevent.v1",
+  "fields": [
+    {
+      "name": "jobId",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "time",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "JobStatus",
+        "symbols": [
+          "FAILED",
+          "SUCCESS",
+          "UNKNOWN"
+        ],
+        "default": "UNKNOWN"
+      }
+    },
+    {
+      "name": "details",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    }
+  ]
+}
