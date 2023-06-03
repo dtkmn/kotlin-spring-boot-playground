@@ -6,7 +6,7 @@ Usage in the application's logback-spring.xml:
 <included>
     <springProfile name="json-logging">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder class="com.projectdrgn.common.logging.JsonEncoder"/>
+            <encoder class="playground.common.observability.logging.JsonEncoder"/>
         </appender>
     </springProfile>
     <springProfile name="!json-logging">

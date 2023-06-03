@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 buildscript {
     dependencies {
         classpath("org.openapitools:openapi-generator-gradle-plugin:6.5.0")
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
     }
 }
 
@@ -30,6 +31,13 @@ repositories {
     }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.5")
+        mavenBom("org.springframework.cloud:spring-cloud-sleuth-otel-dependencies:1.1.2")
+    }
+}
+
 dependencies {
 //    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
 
@@ -38,7 +46,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-//    implementation("org.springframework.boot:spring-boot-autoconfigure")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth") {
+        exclude(group = "org.springframework.cloud", module = "spring-cloud-sleuth-brave")
+    }
+    implementation("org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.26.0")
+
 
     implementation("org.springframework.security:spring-security-config")
 
@@ -60,7 +74,7 @@ dependencies {
     implementation("com.datadoghq:dd-trace-api:1.14.0")
 
     implementation("io.micrometer:micrometer-core:1.11.0")
-    implementation("io.opentelemetry:opentelemetry-sdk:1.26.0")
+//    implementation("io.opentelemetry:opentelemetry-sdk:1.26.0")
 
     implementation("org.apache.commons:commons-lang3:3.12.0")
 
@@ -72,8 +86,8 @@ dependencies {
     implementation("org.springframework:spring-context-support")
     implementation("org.springframework.security:spring-security-oauth2-resource-server")
 
-
-    runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.postgresql:postgresql:42.6.0")
+//    runtimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "mockito-core")

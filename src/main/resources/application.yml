@@ -1,19 +1,44 @@
 ---
 base.url: http://localhost:8080
 environment: ${ENVIRONMENT:local}
-service.name: kotlin-playground
+service:
+  name: kotlin-playground
+
+
 spring:
   main:
     banner-mode: "CONSOLE"
     allow-bean-definition-overriding: true
-  profiles.active: ${PROFILES_ACTIVE:message-debug-logging}
+  profiles.active: ${PROFILES_ACTIVE:json-logging}
+  sleuth:
+    web:
+      tomcat:
+        enabled: true
+    otel:
+      config:
+        trace-id-ratio-based: 1.0
+      exporter:
+        otlp:
+          endpoint: http://otel:4317
   datasource:
-    url: jdbc:h2:mem:kotlin-playground
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+#    url: jdbc:h2:mem:kotlin-playground
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+    url: ${POSTGRES_DB:jdbc:postgresql://postgres:5432/kotlin-playground}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_USER_PASSWORD:password}
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+#    database-platform: org.hibernate.dialect.H2Dialect
+    # show_sql should not be enabled in stg/prod
+    show_sql: false
+    # open-in-view should not be used. Lazy loading in controller will result in N+1.
+    open-in-view: false
+    generate-ddl: true
+#    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: update
+#    hibernate.ddl-auto: validate
   kafka:
     bootstrap-servers: ${KAFKA_HOST:kafka}:9092
     producer:
@@ -28,13 +53,13 @@ spring:
         specific.avro.reader: true
     properties:
       schema.registry.url: http://schema-registry:8081
-  h2:
-    console:
-      enabled: true
+#  h2:
+#    console:
+#      enabled: true
 
 logging:
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   level:
     org.springframework.security: DEBUG
 
@@ -60,11 +85,18 @@ playground:
       id-prefix: kotlin-playground-customer-profile-snapshot-
       listener-count: 1
       enabled: true
-    schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
+    schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
     auto.register.schemas: ${SCHEMA_REGISTRY_AUTO_REG:true}
 
 sentry:
+  enabled: false
   dsn: https://412f1f27c1ae4d718f12328dc6d823c5@o4505273829359616.ingest.sentry.io/4505273831653376
   # Set traces-sample-rate to 1.0 to capture 100% of transactions for performance monitoring.
   # We recommend adjusting this value in production.
   traces-sample-rate: 1.0
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include=*:*
