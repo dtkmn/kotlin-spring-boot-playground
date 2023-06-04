@@ -14,7 +14,7 @@ class ManagementCustomEndpointValidator(
 ) : InitializingBean {
 
     override fun afterPropertiesSet() {
-        if (actuatorEndpoints != null && actuatorEndpoints.isNotEmpty() && !actuatorEndpoints.startsWith(",")) {
+        if (!actuatorEndpoints.isNullOrEmpty() && !actuatorEndpoints.startsWith(",")) {
             throw RuntimeException("dragon.observability.management.custom.endpoints should start from a comma if there are specified endpoints")
         }
     }

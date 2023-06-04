@@ -1,9 +1,5 @@
 package playground.common.idempotencyjpa.config
 
-import playground.common.idempotencyjpa.jpa.IdempotencyRecordRepository
-import playground.common.idempotencyjpa.jpa.JpaIdempotencyStoreAdapter
-import playground.common.idempotencyjpa.jpa.PostgresIdempotencyLockAdapter
-import playground.common.idempotencyjpa.jpa.PostgresIdempotencyLockRepository
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -12,6 +8,10 @@ import org.springframework.context.annotation.Import
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.PlatformTransactionManager
 import playground.common.idempotency.config.IdempotencyConfiguration
+import playground.common.idempotencyjpa.jpa.IdempotencyRecordRepository
+import playground.common.idempotencyjpa.jpa.JpaIdempotencyStoreAdapter
+import playground.common.idempotencyjpa.jpa.PostgresIdempotencyLockAdapter
+import playground.common.idempotencyjpa.jpa.PostgresIdempotencyLockRepository
 
 @Configuration
 @Import(IdempotencyConfiguration::class, PostgresIdempotencyCleanupConfiguration::class)

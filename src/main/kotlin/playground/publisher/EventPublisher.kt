@@ -1,6 +1,7 @@
 package playground.publisher
 
 import org.springframework.stereotype.Component
+import playground.common.idempotency.convenience.IdempotencyContextHolder
 import playground.common.messaging.MessageMetadata
 import playground.common.messaging.publisher.Topic
 import playground.customer.contract.avro.customerprofilesnapshot.v2.CustomerProfileSnapshot

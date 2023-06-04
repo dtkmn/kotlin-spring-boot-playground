@@ -47,7 +47,7 @@ internal class KafkaProducerConfig {
     private lateinit var serviceName: String
 
     // value should be less or equal to broker config transactional.id.expiration.ms
-    @Value("\${dragon.messaging.producer-max-age:7d}")
+    @Value("\${playground.messaging.producer-max-age:7d}")
     private lateinit var producerMaxAge: Duration
 
     @Autowired
@@ -124,10 +124,10 @@ internal class KafkaProducerConfig {
         }
     }
 
-//    @Bean(PRODUCER_ONLY_KAFKA_TRANSACTION_MANAGER)
-//    fun producerOnlyKafkaTransactionManager(@Qualifier("producerOnlyKafkaProducerFactory") producerFactory: ProducerFactory<Any, Any>): KafkaTransactionManager<Any, Any> {
-//        return KafkaTransactionManager<Any, Any>(producerFactory)
-//    }
+    @Bean(PRODUCER_ONLY_KAFKA_TRANSACTION_MANAGER)
+    fun producerOnlyKafkaTransactionManager(@Qualifier("producerOnlyKafkaProducerFactory") producerFactory: ProducerFactory<Any, Any>): KafkaTransactionManager<Any, Any> {
+        return KafkaTransactionManager<Any, Any>(producerFactory)
+    }
 
     @Bean
     fun producerConfig(
