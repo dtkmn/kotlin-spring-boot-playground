@@ -1,16 +1,9 @@
 package playground.processor
 
-//import playground.CePiiRepository
-//import com.projectdrgn.cepiiservice.service.GeocodingService
-//import com.projectdrgn.common.idempotency.IdempotencyProvider
-//import com.projectdrgn.common.messaging.MoxHeaders
-//import com.projectdrgn.common.messaging.idempotency.PublishingInFinalPhase
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.kafka.annotation.KafkaListener
-import org.springframework.messaging.handler.annotation.Header
 import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.stereotype.Component
+import playground.customer.contract.avro.customerprofilesnapshot.v2.CustomerProfileSnapshot
 
 @Component
 class CustomerProfileSnapshotProcessor(
@@ -18,22 +11,21 @@ class CustomerProfileSnapshotProcessor(
 //    private val idempotencyProvider: IdempotencyProvider,
 //    private val geocodingService: GeocodingService,
 //    private val repository: CePiiRepository,
-//    private val ceCustomerSnapshotTopic: KafkaProperties.Retry.Topic<CeCustomerSnapshot>,
 //    private val publishingInFinalPhase: PublishingInFinalPhase
 ) {
 
 //    private val log = logger()
 
-//    @KafkaListener(
-//        id = "\${dragon.messaging.customer-profile.consumer-group-id}",
-//        clientIdPrefix = "\${dragon.messaging.customer-profile.id-prefix}",
-//        topics = ["\${dragon.messaging.customer-profile.topic}"],
-//        concurrency = "\${dragon.messaging.customer-profile.listener-count}",
-//        autoStartup = "\${dragon.messaging.customer-profile.enabled}"
-//    )
+    @KafkaListener(
+        id = "\${playground.messaging.customer-profile.consumer-group-id}",
+        clientIdPrefix = "\${playground.messaging.customer-profile.id-prefix}",
+        topics = ["\${playground.messaging.customer-profile.topic}"],
+        concurrency = "\${playground.messaging.customer-profile.listener-count}",
+        autoStartup = "\${playground.messaging.customer-profile.enabled}"
+    )
     @Throws(Exception::class)
     fun process(
-//        @Payload snapshot: CustomerProfileSnapshot,
+        @Payload snapshot: CustomerProfileSnapshot,
 //        @Header(name = MoxHeaders.IDEMPOTENCY_KEY) idempotencyKey: String
     ) {
 //        if (snapshot.status != Status.ACTIVE || snapshot.externalId == null || snapshot.createdAt == null) return
@@ -45,6 +37,14 @@ class CustomerProfileSnapshotProcessor(
 //            settings = arrayOf(publishingInFinalPhase)
 //        ) { ctx ->
 //            ctx.validateProcessInputs(generateUniquePayloadMap(snapshot))
+        println("Processing customer profile snapshot with customerId:  $snapshot")
+//                "Processing customer profile snapshot: {}",
+//                listOf(
+//                    kv("customerID", snapshot.customerId),
+//                    kv("externalID", snapshot.externalId!!),
+//                    kv("status", snapshot.status),
+//                )
+//            )
 
 //            log.info(
 //                "Processing customer profile snapshot: {}",

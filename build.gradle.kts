@@ -1,62 +1,107 @@
+import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     dependencies {
-        classpath("org.openapitools:openapi-generator-gradle-plugin:6.2.1")
+        classpath("org.openapitools:openapi-generator-gradle-plugin:6.5.0")
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
     }
 }
 
 plugins {
     id ("java")
-//    application
-    id ("org.openapi.generator") version "6.2.1"
-    id ("org.springframework.boot") version "3.0.2"
+    id ("org.openapi.generator") version "6.5.0"
+    id ("org.springframework.boot") version "3.0.7"
     id ("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.7.22"
-    kotlin("plugin.spring") version "1.7.22"
-    kotlin("plugin.allopen") version "1.7.22"
-    kotlin("plugin.jpa") version "1.7.22"
-//    id ("org.jetbrains.kotlin.plugin.noarg") version "1.8.0"
+    id ("com.github.davidmc24.gradle.plugin.avro") version "1.3.0"
+    kotlin("jvm") version "1.8.0"
+    kotlin("plugin.spring") version "1.8.0"
+    kotlin("plugin.allopen") version "1.8.0"
+    kotlin("plugin.jpa") version "1.8.0"
 }
 
 group = "playground"
 version = "1.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_19
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://packages.confluent.io/maven")
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.5")
+        mavenBom("org.springframework.cloud:spring-cloud-sleuth-otel-dependencies:1.1.2")
+    }
 }
 
 dependencies {
 //    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
 
-    implementation("org.springframework.boot:spring-boot-starter-web") {
-        exclude(group = "org.slf4j", module = "slf4j-log4j12")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-logging")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth") {
+        exclude(group = "org.springframework.cloud", module = "spring-cloud-sleuth-brave")
     }
-//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.26.0")
+
+
+    implementation("org.springframework.security:spring-security-config")
+
     implementation("org.springframework.kafka:spring-kafka")
 
-//    implementation("org.apache.avro:avro-tools:1.11.1")
+    implementation("io.sentry:sentry-spring-boot-starter-jakarta:6.20.0")
+    implementation("io.sentry:sentry-logback:6.20.0")
+
     implementation("org.apache.avro:avro:1.11.1")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("io.confluent:kafka-avro-serializer:7.3.1")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-//    testImplementation(kotlin("test"))
-}
+    implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+    implementation("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation("org.springframework.security:spring-security-oauth2-jose:6.1.0")
 
-tasks.test {
-    useJUnitPlatform()
-}
+    implementation("com.datadoghq:dd-trace-api:1.14.0")
 
-tasks.withType<KotlinCompile> {
-//    kotlinOptions.jvmTarget = "19"
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+    implementation("io.micrometer:micrometer-core:1.11.0")
+//    implementation("io.opentelemetry:opentelemetry-sdk:1.26.0")
+
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+
+    implementation("org.javamoney:moneta:1.4.2")
+
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.1.2")
+
+    implementation("com.github.ben-manes.caffeine:caffeine")
+    implementation("org.springframework:spring-context-support")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+
+    runtimeOnly("org.postgresql:postgresql:42.6.0")
+//    runtimeOnly("com.h2database:h2")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "mockito-core")
     }
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("com.ninja-squad:springmockk:4.0.0")
 }
+
+//configure<com.palantir.gradle.docker.DockerExtension> {
+//    name.set("your-docker-username/your-microservice:latest")
+//    files("build/libs")
+//}
+
 
 allOpen {
     annotation("jakarta.persistence.Entity")
@@ -65,32 +110,56 @@ allOpen {
 }
 
 openApiGenerate {
-    generatorName.set("kotlin")
+    generatorName.set("java")
     inputSpec.set("${projectDir}/src/main/resources/spec/ce-pii-v3.yaml")
-    outputDir.set("${buildDir}/generated")
+    outputDir.set("${buildDir}/generated/openapi")
     apiPackage.set("org.openapi.example.api")
     modelPackage.set("org.openapi.example.model")
+    configOptions.set(
+        mapOf(
+            "useJakartaEe" to "true"
+        )
+    )
     println("Finishing openApiGenerate ... ")
 }
 
-tasks.register("generateAvroClasses", JavaExec::class) {
-    main = "org.apache.avro.tool.Main"
-    classpath = configurations.compileClasspath.get() + configurations.runtimeClasspath.get()
-    args = listOf("compile", "schema", "${projectDir}/src/main/resources/avro/customeronboardingsnapshot.avsc", "${buildDir}/classes/kotlin")
-    println("Finishing generateAvroClasses ... ")
+avro {
+    fieldVisibility.set("PRIVATE")
+    outputCharacterEncoding.set("UTF-8")
+    stringType.set("String")
+}
+
+val avroSourceDir = "src/main/resources/avro"
+val generateAvro = tasks.register<GenerateAvroJavaTask>("generateAvro") {
+    source = fileTree(avroSourceDir).matching {
+        include("**/*.avsc")
+    }
+    setOutputDir(file("${buildDir}/generated/avro"))
 }
 
 
-tasks.getByName("build")
-    .dependsOn("generateAvroClasses")
-    .dependsOn("openApiGenerate")
-    .didWork
+tasks.test {
+    useJUnitPlatform()
+}
 
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "19"
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "19"
+        }
+        dependsOn(generateAvro)
+        dependsOn(openApiGenerate)
+    }
+}
 
 sourceSets {
     main {
         java {
-            srcDirs("${buildDir}/classes/kotlin")
+            srcDir("src/main/kotlin")
+            srcDir("${buildDir}/generated/avro")
+            srcDir("${buildDir}/generated/openapi/src/main/kotlin")
         }
     }
 }

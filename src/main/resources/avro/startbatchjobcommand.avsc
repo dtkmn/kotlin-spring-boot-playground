@@ -1,0 +1,32 @@
+{
+  "mox-meta": {
+    "version": "1.0.0",
+    "type": "COMMAND"
+  },
+  "type": "record",
+  "name": "StartBatchJobCommand",
+  "namespace": "com.mox.shared.contract.avro.startbatchjobcommand.v1",
+  "fields": [
+    {
+      "name": "jobId",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "jobName",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "scheduledTimestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}
