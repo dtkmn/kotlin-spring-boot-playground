@@ -11,18 +11,18 @@ buildscript {
 plugins {
     id ("java")
     id ("org.openapi.generator") version "6.5.0"
-    id ("org.springframework.boot") version "3.0.7"
+    id ("org.springframework.boot") version "3.1.0"
     id ("io.spring.dependency-management") version "1.1.0"
     id ("com.github.davidmc24.gradle.plugin.avro") version "1.3.0"
-    kotlin("jvm") version "1.8.0"
-    kotlin("plugin.spring") version "1.8.0"
-    kotlin("plugin.allopen") version "1.8.0"
-    kotlin("plugin.jpa") version "1.8.0"
+    kotlin("jvm") version "1.9.0"
+    kotlin("plugin.spring") version "1.9.0"
+    kotlin("plugin.allopen") version "1.9.0"
+    kotlin("plugin.jpa") version "1.9.0"
 }
 
 group = "playground"
 version = "1.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_19
+java.sourceCompatibility = JavaVersion.VERSION_20
 
 repositories {
     mavenCentral()
@@ -144,10 +144,10 @@ tasks.test {
 
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "19"
+        kotlinOptions.jvmTarget = "20"
         kotlinOptions {
             freeCompilerArgs += "-Xjsr305=strict"
-            jvmTarget = "19"
+            jvmTarget = "20"
         }
         dependsOn(generateAvro)
         dependsOn(openApiGenerate)

@@ -1,6 +1,6 @@
 # Use the official gradle image to create a build artifact.
 # This is based on Debian and sets the GRADLE_HOME environment variable
-FROM gradle:7.6.0-jdk19 as builder
+FROM gradle:8.3.0-jdk20 as builder
 
 # Set the working directory in the image
 WORKDIR /usr/src/app
@@ -13,8 +13,8 @@ COPY settings.gradle.kts .
 # Package the application
 RUN gradle build -x test
 
-# Use OpenJDK JRE 19 for the runtime stage of the image
-FROM openjdk:19-jdk
+# Use OpenJDK JRE 20 for the runtime stage of the image
+FROM openjdk:20-jdk
 
 WORKDIR /app
 
