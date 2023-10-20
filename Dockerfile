@@ -14,7 +14,7 @@ COPY settings.gradle.kts .
 RUN gradle build -x test
 
 # Use OpenJDK JRE 20 for the runtime stage of the image
-FROM openjdk:20-jdk
+FROM openjdk:20-jdk-slim
 
 WORKDIR /app
 
