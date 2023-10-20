@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_kotlin_playground_1697780728294-push-trigger-input-set
+  identifier: Build_kotlin_playground_1697780728294pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: KotlinPlayground
+  pipeline:
+    identifier: Build_kotlin_playground_1697780728294
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
