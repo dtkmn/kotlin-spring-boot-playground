@@ -18,14 +18,12 @@ pipeline:
           execution:
             steps:
               - step:
-                  identifier: dockerbuild
-                  name: docker_build
+                  identifier: gradlebuild
+                  name: gradle_build
                   spec:
-                    image: plugins/docker
-                    settings:
-                      dry_run: "true"
-                      repo: hello/world
-                      tags: latest
+                    image: gradle:latest
+                    commands:
+                      - gradle build -x test
                   timeout: ""
                   type: Plugin
           platform:
