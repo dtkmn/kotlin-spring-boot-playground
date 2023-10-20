@@ -8,7 +8,7 @@ pipeline:
       codebase:
         build: <+input>
         connectorRef: account.Github_OAuth_1697780697693
-        repoName: kotlin-playground
+        repoName: dtkmn/kotlin-playground
   stages:
     - stage:
         identifier: build
