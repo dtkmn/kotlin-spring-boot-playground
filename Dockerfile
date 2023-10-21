@@ -13,8 +13,8 @@ COPY settings.gradle.kts .
 # Package the application
 RUN gradle build -x test
 
-# Use OpenJDK JRE 20 for the runtime stage of the image
-FROM openjdk:20-jdk-slim
+# Use eclipse-temurin:20-jre-alpine for the runtime stage of the image
+FROM eclipse-temurin:20-jre-alpine
 
 WORKDIR /app
 
