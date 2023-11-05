@@ -42,3 +42,17 @@ services:
       KAFKA_BROKERCONNECT: kafka:9092
       SCHEMAREGISTRY_CONNECT: http://schema-registry:8081
       JVM_OPTS: -Xms32M -Xmx64M
+
+  postgres:
+    image: "postgres:${POSTGRES_VERSION:-10.5}"
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-kotlin-playground}"
+      POSTGRES_USER: "${POSTGRES_USER:-postgres}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-password}"
+    ports:
+      - "${POSTGRES_EXPORT_PORT:-5432}:5432"
+    volumes:
+      - "postgresData:/var/lib/postgresql/data"
+
+volumes:
+  postgresData:
