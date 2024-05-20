@@ -11,6 +11,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.MicrometerConsumerListener
 import org.springframework.kafka.listener.*
+import org.springframework.kafka.support.converter.BatchMessagingMessageConverter
 import org.springframework.util.backoff.ExponentialBackOff
 import playground.common.messaging.consumer.BatchJobListenerAspect
 import playground.common.messaging.consumer.BatchJobListenerBeanPostProcessor
@@ -44,7 +45,8 @@ class KafkaBatchListenerConsumerConfig(
     ): ConcurrentKafkaListenerContainerFactory<Any, Any> {
         val factory = ConcurrentKafkaListenerContainerFactory<Any, Any>()
         factory.consumerFactory = noTxBatchJobConsumerFactory
-        factory.setMessageConverter(moxMessageConverter)
+//        factory.setMessageConverter(moxMessageConverter)
+        factory.setBatchMessageConverter(BatchMessagingMessageConverter(moxMessageConverter))
         // manual immediate ack mode - commit will be done when acknowledge (Acknowledgment.acknowledge()) is done manually
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
         factory.containerProperties.assignmentCommitOption = ContainerProperties.AssignmentCommitOption.NEVER

@@ -73,12 +73,14 @@ internal class KafkaConsumerConfig {
     ): ConcurrentKafkaListenerContainerFactory<Any, Any> {
         val factory = ConcurrentKafkaListenerContainerFactory<Any, Any>()
         factory.consumerFactory = consumerFactory(consumerConfig, meterRegistry)
-        factory.setMessageConverter(moxMessageConverter)
+//        factory.setMessageConverter(moxMessageConverter)
+        factory.setRecordMessageConverter(moxMessageConverter) // Since 2.9.6
         factory.setAfterRollbackProcessor(defaultAfterRollbackProcessor)
         factory.containerProperties.transactionManager = kafkaTransactionManager
         factory.containerProperties.assignmentCommitOption = ContainerProperties.AssignmentCommitOption.NEVER
         factory.setRecordInterceptor(dragonRecordInterceptor)
-        factory.setErrorHandler(dragonMessagingErrorHandler)
+//        factory.setErrorHandler(dragonMessagingErrorHandler)
+        factory.setCommonErrorHandler(dragonMessagingErrorHandler)
         // TODO: try to leave this as true,
         //  see http://devdoc.net/javaweb/spring/spring-kafka-docs-2.2.3/reference/htmlsingle/
         //  see https://stackoverflow.com/questions/58206543/springboot-kafka-consumer-failed-to-start-bean-internalkafkalistenerendpointreg/58207320#58207320
