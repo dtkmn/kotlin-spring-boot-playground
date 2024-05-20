@@ -11,7 +11,7 @@ buildscript {
 plugins {
     id ("java")
     id ("org.openapi.generator") version "6.5.0"
-    id ("org.springframework.boot") version "3.1.0"
+    id ("org.springframework.boot") version "3.2.5"
     id ("io.spring.dependency-management") version "1.1.0"
     id ("com.github.davidmc24.gradle.plugin.avro") version "1.3.0"
     kotlin("jvm") version "1.9.0"
@@ -22,7 +22,7 @@ plugins {
 
 group = "playground"
 version = "1.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_20
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
@@ -61,22 +61,22 @@ dependencies {
     implementation("io.sentry:sentry-spring-boot-starter-jakarta:6.20.0")
     implementation("io.sentry:sentry-logback:6.20.0")
 
-    implementation("org.apache.avro:avro:1.11.1")
+    implementation("org.apache.avro:avro:1.11.3")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("io.confluent:kafka-avro-serializer:7.3.1")
 
-    implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+    implementation("net.logstash.logback:logstash-logback-encoder:7.4")
     implementation("org.apache.httpcomponents:httpclient:4.5.14")
-    implementation("org.springframework.security:spring-security-oauth2-jose:6.1.0")
+    implementation("org.springframework.security:spring-security-oauth2-jose:6.2.4")
 
-    implementation("com.datadoghq:dd-trace-api:1.14.0")
+    implementation("com.datadoghq:dd-trace-api:1.33.0")
 
-    implementation("io.micrometer:micrometer-core:1.11.0")
+    implementation("io.micrometer:micrometer-core:1.12.6")
 //    implementation("io.opentelemetry:opentelemetry-sdk:1.26.0")
 
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-lang3:3.14.0")
 
     implementation("org.javamoney:moneta:1.4.2")
 
@@ -86,7 +86,7 @@ dependencies {
     implementation("org.springframework:spring-context-support")
     implementation("org.springframework.security:spring-security-oauth2-resource-server")
 
-    runtimeOnly("org.postgresql:postgresql:42.6.0")
+    runtimeOnly("org.postgresql:postgresql:42.7.3")
 //    runtimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -94,7 +94,7 @@ dependencies {
     }
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("com.ninja-squad:springmockk:4.0.0")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
 }
 
 //configure<com.palantir.gradle.docker.DockerExtension> {
@@ -112,7 +112,7 @@ allOpen {
 openApiGenerate {
     generatorName.set("java")
     inputSpec.set("${projectDir}/src/main/resources/spec/ce-pii-v3.yaml")
-    outputDir.set("${buildDir}/generated/openapi")
+    outputDir.set("${layout.buildDirectory}/generated/openapi")
     apiPackage.set("org.openapi.example.api")
     modelPackage.set("org.openapi.example.model")
     configOptions.set(
@@ -134,7 +134,7 @@ val generateAvro = tasks.register<GenerateAvroJavaTask>("generateAvro") {
     source = fileTree(avroSourceDir).matching {
         include("**/*.avsc")
     }
-    setOutputDir(file("${buildDir}/generated/avro"))
+    setOutputDir(file("${layout.buildDirectory}/generated/avro"))
 }
 
 
@@ -144,10 +144,10 @@ tasks.test {
 
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "20"
+        kotlinOptions.jvmTarget = "17"
         kotlinOptions {
             freeCompilerArgs += "-Xjsr305=strict"
-            jvmTarget = "20"
+            jvmTarget = "17"
         }
         dependsOn(generateAvro)
         dependsOn(openApiGenerate)
@@ -158,8 +158,8 @@ sourceSets {
     main {
         java {
             srcDir("src/main/kotlin")
-            srcDir("${buildDir}/generated/avro")
-            srcDir("${buildDir}/generated/openapi/src/main/kotlin")
+            srcDir("${layout.buildDirectory}/generated/avro")
+            srcDir("${layout.buildDirectory}/generated/openapi/src/main/kotlin")
         }
     }
 }
