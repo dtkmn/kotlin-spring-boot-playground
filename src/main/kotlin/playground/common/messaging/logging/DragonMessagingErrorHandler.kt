@@ -1,9 +1,7 @@
 package playground.common.messaging.logging
 
-import playground.common.observability.logging.MDC_KEY_LOG_EVENT
-import playground.common.observability.logging.kv
-import playground.common.messaging.consumer.MessageListenerContainerStartHelper
 import io.sentry.Sentry
+import org.apache.commons.lang3.exception.ExceptionUtils
 import org.apache.kafka.clients.consumer.Consumer
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.KafkaException
@@ -13,12 +11,14 @@ import org.apache.kafka.common.errors.UnknownProducerIdException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.core.task.SimpleAsyncTaskExecutor
-import org.springframework.kafka.listener.ErrorHandler
+import org.springframework.kafka.listener.DefaultErrorHandler
 import org.springframework.kafka.listener.ListenerExecutionFailedException
 import org.springframework.kafka.listener.MessageListenerContainer
 import org.springframework.transaction.CannotCreateTransactionException
+import playground.common.messaging.consumer.MessageListenerContainerStartHelper
+import playground.common.observability.logging.MDC_KEY_LOG_EVENT
+import playground.common.observability.logging.kv
 import java.util.concurrent.Executor
-import org.apache.commons.lang3.exception.ExceptionUtils
 
 
 /**
@@ -29,30 +29,51 @@ import org.apache.commons.lang3.exception.ExceptionUtils
  * exceptions restarts container.
  *
  */
-class DragonMessagingErrorHandler(private val messageListenerContainerStartHelper: MessageListenerContainerStartHelper) : ErrorHandler {
+class DragonMessagingErrorHandler(private val messageListenerContainerStartHelper: MessageListenerContainerStartHelper) : DefaultErrorHandler() {
 
     private val log: Logger = LoggerFactory.getLogger(javaClass)!!
     private val executor: Executor = SimpleAsyncTaskExecutor()
 
     // used by when listener fails on record
-    override fun handle(ex: Exception, data: ConsumerRecord<*, *>?) {
-        Sentry.captureException(unwrap(ex))
-        throw ex
-    }
-
-    // used when rollback processing fails - for some unrecoverable exceptions restarts container
-    override fun handle(
-        ex: java.lang.Exception,
-        records: MutableList<ConsumerRecord<*, *>>,
+//    override fun handle(thrownException: Exception, record: ConsumerRecord<*, *>?) {
+//        Sentry.captureException(unwrap(thrownException))
+//        throw thrownException
+//    }
+    override fun handleOne(
+        thrownException: java.lang.Exception,
+        record: ConsumerRecord<*, *>,
         consumer: Consumer<*, *>,
         container: MessageListenerContainer
-    ) {
-        if (exceptionQualifyForContainerRestart(ex)) {
-            restartContainer(container)
-        }
-        Sentry.captureException(unwrap(ex))
-        throw ex
+    ): Boolean {
+//        return super.handleOne(thrownException, record, consumer, container)
+        Sentry.captureException(unwrap(thrownException))
+        throw thrownException
     }
+
+    // Handles exceptions for a single record
+//    override fun handleOne(
+//        thrownException: Exception,
+//        record: ConsumerRecord<*, *>?,
+//        consumer: Consumer<*, *>,
+//        container: MessageListenerContainer
+//    ): Boolean {
+//        Sentry.captureException(unwrap(thrownException))
+//        throw thrownException
+//    }
+
+    // used when rollback processing fails - for some unrecoverable exceptions restarts container
+//    override fun handle(
+//        ex: java.lang.Exception,
+//        records: MutableList<ConsumerRecord<*, *>>,
+//        consumer: Consumer<*, *>,
+//        container: MessageListenerContainer
+//    ) {
+//        if (exceptionQualifyForContainerRestart(ex)) {
+//            restartContainer(container)
+//        }
+//        Sentry.captureException(unwrap(ex))
+//        throw ex
+//    }
 
     private fun exceptionQualifyForContainerRestart(ex: Exception): Boolean {
         // any transactional exceptions are thrown by rollback processing only

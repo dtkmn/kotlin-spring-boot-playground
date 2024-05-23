@@ -26,7 +26,7 @@ open class MoxProducerOnlyKafkaTemplate<K, V>(producerFactory: ProducerFactory<K
 
     private val log = LoggerFactory.getLogger(javaClass)!!
 
-    override fun <T : Any?> executeInTransaction(callback: KafkaOperations.OperationsCallback<K, V, T>): T {
+    override fun <T : Any> executeInTransaction(callback: KafkaOperations.OperationsCallback<K, V, T>): T {
         try {
             return super.executeInTransaction(callback)
         } catch (e: KafkaException) {
