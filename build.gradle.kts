@@ -51,7 +51,7 @@ dependencies {
         exclude(group = "org.springframework.cloud", module = "spring-cloud-sleuth-brave")
     }
     implementation("org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure")
-    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.26.0")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.38.0")
 
 
     implementation("org.springframework.security:spring-security-config")
