@@ -25,7 +25,7 @@ spring:
 #    driver-class-name: org.h2.Driver
 #    username: sa
 #    password:
-    url: ${POSTGRES_DB:jdbc:postgresql://localhost:5432/kotlin-playground}
+    url: ${POSTGRES_DB:jdbc:postgresql://postgres:5432/kotlin-playground}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_USER_PASSWORD:password}
   jpa:
@@ -40,7 +40,7 @@ spring:
     hibernate.ddl-auto: update
 #    hibernate.ddl-auto: validate
   kafka:
-    bootstrap-servers: ${KAFKA_HOST:localhost}:9092
+    bootstrap-servers: ${KAFKA_HOST:kafka}:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
@@ -73,7 +73,7 @@ playground:
 #        - /v2/pii/external/**
   messaging:
     bootstrap:
-      servers: ${KAFKA_HOST:localhost}:9092
+      servers: ${KAFKA_HOST:kafka}:9092
     auth: ${KAFKA_AUTH:false}
     username: ${KAFKA_USER:}
     password: ${KAFKA_USER_PASSWORD:}
@@ -85,7 +85,7 @@ playground:
       id-prefix: kotlin-playground-customer-profile-snapshot-
       listener-count: 1
       enabled: true
-    schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
+    schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
     auto.register.schemas: ${SCHEMA_REGISTRY_AUTO_REG:true}
 
 sentry:

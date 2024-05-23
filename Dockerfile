@@ -1,6 +1,6 @@
 # Use the official gradle image to create a build artifact.
 # This is based on Debian and sets the GRADLE_HOME environment variable
-FROM gradle:8.3.0-jdk20 as builder
+FROM gradle:8.7.0-jdk17 as builder
 
 # Set the working directory in the image
 WORKDIR /usr/src/app
@@ -14,7 +14,7 @@ COPY settings.gradle.kts .
 RUN gradle build -x test
 
 # Use eclipse-temurin:20-jre-alpine for the runtime stage of the image
-FROM eclipse-temurin:20-jre-alpine
+FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
