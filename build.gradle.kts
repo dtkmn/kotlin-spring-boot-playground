@@ -47,11 +47,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth") {
         exclude(group = "org.springframework.cloud", module = "spring-cloud-sleuth-brave")
     }
     implementation("org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure")
-    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.38.0")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.39.0")
 
 
     implementation("org.springframework.security:spring-security-config")
@@ -73,7 +76,7 @@ dependencies {
 
     implementation("com.datadoghq:dd-trace-api:1.33.0")
 
-    implementation("io.micrometer:micrometer-core:1.12.6")
+    implementation("io.micrometer:micrometer-core:1.13.1")
 //    implementation("io.opentelemetry:opentelemetry-sdk:1.26.0")
 
     implementation("org.apache.commons:commons-lang3:3.14.0")
@@ -86,6 +89,7 @@ dependencies {
     implementation("org.springframework:spring-context-support")
     implementation("org.springframework.security:spring-security-oauth2-resource-server")
 
+    implementation("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
     runtimeOnly("org.postgresql:postgresql:42.7.3")
 //    runtimeOnly("com.h2database:h2")
 
@@ -95,6 +99,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("com.ninja-squad:springmockk:4.0.2")
+    testImplementation("io.projectreactor:reactor-test")
 }
 
 //configure<com.palantir.gradle.docker.DockerExtension> {
