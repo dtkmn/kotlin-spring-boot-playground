@@ -56,8 +56,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure")
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.39.0")
 
-
-    implementation("org.springframework.security:spring-security-config")
+//    implementation("org.springframework.security:spring-security-config")
 
     implementation("org.springframework.kafka:spring-kafka")
 
@@ -72,7 +71,7 @@ dependencies {
 
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
     implementation("org.apache.httpcomponents:httpclient:4.5.14")
-    implementation("org.springframework.security:spring-security-oauth2-jose:6.2.4")
+//    implementation("org.springframework.security:spring-security-oauth2-jose:6.2.4")
 
     implementation("com.datadoghq:dd-trace-api:1.33.0")
 
@@ -87,7 +86,7 @@ dependencies {
 
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework:spring-context-support")
-    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+//    implementation("org.springframework.security:spring-security-oauth2-resource-server")
 
     implementation("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
     runtimeOnly("org.postgresql:postgresql:42.7.3")

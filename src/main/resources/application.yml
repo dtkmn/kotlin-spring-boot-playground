@@ -9,7 +9,7 @@ spring:
   main:
     banner-mode: "CONSOLE"
     allow-bean-definition-overriding: true
-  profiles.active: ${PROFILES_ACTIVE:json-logging}
+#  profiles.active: ${PROFILES_ACTIVE:json-logging}
   sleuth:
     web:
       tomcat:
@@ -28,16 +28,16 @@ spring:
     url: ${POSTGRES_DB:jdbc:postgresql://postgres:5432/kotlin-playground}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_USER_PASSWORD:password}
-  jpa:
-#    database-platform: org.hibernate.dialect.H2Dialect
-    # show_sql should not be enabled in stg/prod
-    show_sql: false
-    # open-in-view should not be used. Lazy loading in controller will result in N+1.
-    open-in-view: false
-    generate-ddl: true
-#    properties.hibernate.temp.use_jdbc_metadata_defaults: false
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: update
+#  jpa:
+##    database-platform: org.hibernate.dialect.H2Dialect
+#    # show_sql should not be enabled in stg/prod
+#    show_sql: false
+#    # open-in-view should not be used. Lazy loading in controller will result in N+1.
+#    open-in-view: false
+#    generate-ddl: true
+##    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    hibernate.ddl-auto: update
 #    hibernate.ddl-auto: validate
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/kotlin-playground
@@ -77,29 +77,29 @@ playground:
 #      password: ${APIGEE_BASIC_AUTH_PASS:{bcrypt}$2a$12$SA/4ISxzQmwRJ232gawpiu7Se86Ohs3SC47gfDj8dl/tZnMLpo/De}
 #      matchers:
 #        - /v2/pii/external/**
-  messaging:
-    bootstrap:
-      servers: ${KAFKA_HOST:kafka}:9092
-    auth: ${KAFKA_AUTH:false}
-    username: ${KAFKA_USER:}
-    password: ${KAFKA_USER_PASSWORD:}
-    ssl: ${KAFKA_SSL:false}
-    transaction-id-prefix: kotlin-playground-tx-
-    customer-profile:
-      topic: kotlin.playground.profile.snapshot
-      consumer-group-id: kotlin-playground-customer-profile-snapshot-consumer-group-1
-      id-prefix: kotlin-playground-customer-profile-snapshot-
-      listener-count: 1
-      enabled: true
-    schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
-    auto.register.schemas: ${SCHEMA_REGISTRY_AUTO_REG:true}
+#  messaging:
+#    bootstrap:
+#      servers: ${KAFKA_HOST:kafka}:9092
+#    auth: ${KAFKA_AUTH:false}
+#    username: ${KAFKA_USER:}
+#    password: ${KAFKA_USER_PASSWORD:}
+#    ssl: ${KAFKA_SSL:false}
+#    transaction-id-prefix: kotlin-playground-tx-
+#    customer-profile:
+#      topic: kotlin.playground.profile.snapshot
+#      consumer-group-id: kotlin-playground-customer-profile-snapshot-consumer-group-1
+#      id-prefix: kotlin-playground-customer-profile-snapshot-
+#      listener-count: 1
+#      enabled: true
+#    schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+#    auto.register.schemas: ${SCHEMA_REGISTRY_AUTO_REG:true}
 
-sentry:
-  enabled: false
-  dsn: https://412f1f27c1ae4d718f12328dc6d823c5@o4505273829359616.ingest.sentry.io/4505273831653376
-  # Set traces-sample-rate to 1.0 to capture 100% of transactions for performance monitoring.
-  # We recommend adjusting this value in production.
-  traces-sample-rate: 1.0
+#sentry:
+#  enabled: false
+#  dsn: https://412f1f27c1ae4d718f12328dc6d823c5@o4505273829359616.ingest.sentry.io/4505273831653376
+#  # Set traces-sample-rate to 1.0 to capture 100% of transactions for performance monitoring.
+#  # We recommend adjusting this value in production.
+#  traces-sample-rate: 1.0
 
 #management:
 #  endpoints:
