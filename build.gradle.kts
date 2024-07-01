@@ -70,10 +70,10 @@ dependencies {
     implementation("io.confluent:kafka-avro-serializer:7.3.1")
 
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
-    implementation("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation("org.apache.httpcomponents:httpclient:4.5")
 //    implementation("org.springframework.security:spring-security-oauth2-jose:6.2.4")
 
-    implementation("com.datadoghq:dd-trace-api:1.33.0")
+    implementation("com.datadoghq:dd-trace-api:1.36.0")
 
     implementation("io.micrometer:micrometer-core:1.13.1")
 //    implementation("io.opentelemetry:opentelemetry-sdk:1.26.0")
@@ -91,6 +91,8 @@ dependencies {
     implementation("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
     runtimeOnly("org.postgresql:postgresql:42.7.3")
 //    runtimeOnly("com.h2database:h2")
+
+    implementation("com.amazonaws:aws-java-sdk-dynamodb:1.11.1000")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api")

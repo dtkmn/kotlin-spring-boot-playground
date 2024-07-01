@@ -40,7 +40,7 @@ spring:
 #    hibernate.ddl-auto: update
 #    hibernate.ddl-auto: validate
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/kotlin-playground
+    url: r2dbc:postgresql://postgres:5432/kotlin-playground
     username: postgres
     password: password
   flyway:
