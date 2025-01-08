@@ -61,7 +61,7 @@ dependencies {
     implementation("io.sentry:sentry-spring-boot-starter-jakarta:6.20.0")
     implementation("io.sentry:sentry-logback:6.20.0")
 
-    implementation("org.apache.avro:avro:1.11.3")
+    implementation("org.apache.avro:avro:1.11.4")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
